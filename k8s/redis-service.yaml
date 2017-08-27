@@ -1,14 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: redis-master
+  name: redis
 spec:
   replicas: 1
   template:
     metadata:
       labels:
         app: redis
-        role: master
         tier: backend
     spec:
       containers:
@@ -24,10 +23,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-master
+  name: redis
   labels:
     app: redis
-    role: master
     tier: backend
 spec:
   ports:
@@ -35,5 +33,4 @@ spec:
     targetPort: 6379
   selector:
     app: redis
-    role: master
     tier: backend

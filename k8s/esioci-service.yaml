@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: esioci-api
+  name: esioci
   labels:
     app: esioci
     tier: backend
@@ -9,13 +9,13 @@ spec:
   ports:
   - port: 4000
   selector:
-    app: esioci-api
+    app: esioci
     tier: backend
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: esioci-api
+  name: esioci
 spec:
   replicas: 1
   template:
@@ -25,16 +25,18 @@ spec:
         tier: backend
     spec:
       containers:
-      - name: esioci-api
-        image: gcr.io/esio-test/esioci:4
+      - name: esioci
+        image: gcr.io/esio-test/esioci:11
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 300m
+            memory: 1000Mi
         env:
         - name: GET_HOSTS_FROM
           value: dns
         - name: ESIOCI_DB_HOST
           value: postgresql
+        - name: ESIOCI_REDIS
+          value: redis://redis:6379
         ports:
         - containerPort: 4000

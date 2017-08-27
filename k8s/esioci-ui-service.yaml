@@ -27,7 +27,8 @@ spec:
     spec:
       containers:
       - name: esioci-ui
-        image: gcr.io/esio-test/esioci-ui:latest
+        image: gcr.io/esio-test/esioci-ui:7
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
